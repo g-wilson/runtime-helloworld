@@ -2,8 +2,6 @@ module github.com/g-wilson/runtime-helloworld
 
 go 1.13
 
-replace github.com/g-wilson/runtime => /Users/georgew/dev/random/runtime
-
 require (
 	github.com/aws/aws-lambda-go v1.16.0
 	github.com/g-wilson/runtime v0.0.0-00010101000000-000000000000

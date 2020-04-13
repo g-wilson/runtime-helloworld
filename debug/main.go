@@ -27,7 +27,7 @@ func main() {
 		panic(err)
 	}
 
-	server.AddService("helloworld", helloworldApp.RPCService(), false)
+	server.AddService("helloworld", helloworldApp.RPCService(), nil)
 
 	server.Listen()
 }

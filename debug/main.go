@@ -22,12 +22,12 @@ func main() {
 
 	server := devserver.New(listenAddr)
 
-	helloworldApp, err := app.New()
+	a, err := app.New()
 	if err != nil {
 		panic(err)
 	}
 
-	server.AddService("helloworld", helloworldApp.RPCService(), nil)
+	server.AddService("helloworld", a.Service(), nil)
 
 	server.Listen()
 }

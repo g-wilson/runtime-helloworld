@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/g-wilson/runtime/logger"
+	"github.com/g-wilson/runtime/rpcservice"
 	"github.com/sirupsen/logrus"
 )
 
@@ -23,4 +24,9 @@ func New() (*App, error) {
 	return &App{
 		Logger: appLogger,
 	}, nil
+}
+
+func (a *App) Service() *rpcservice.Service {
+	return rpcservice.NewService(a.Logger).
+		AddMethod("greet", a.Greet, GreetRequestSchema)
 }

@@ -1,4 +1,4 @@
-Hello world example service using [runtime](https://github.com/g-wilson/runtime-helloworld), a framework for writing JSON-RPC services in Go and hosting them on AWS Lambda with API Gateway.
+Hello world example service using [runtime](https://github.com/g-wilson/runtime), a framework for writing JSON-RPC services in Go and hosting them on AWS Lambda with API Gateway.
 
 ### How to run locally
 

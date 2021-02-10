@@ -1,43 +1,28 @@
 package lambda
 
 import (
-	"fmt"
-	"log"
 	"os"
 
+	service "github.com/g-wilson/runtime-helloworld/service"
+
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/g-wilson/runtime/logger"
 )
 
-type EntrypointFn func() (interface{}, error)
-
-var Functions = map[string]EntrypointFn{
-	"api":    APIEntrypoint,
-	"worker": SQSEntrypoint,
-}
-
 func main() {
-	err := (func() error {
+	log := logger.Create("my-service", os.Getenv("LOG_FORMAT"), os.Getenv("LOG_LEVEL"))
 
-		entrypoint := os.Getenv("LAMBDA_ENTRYPOINT")
-		if entrypoint == "" {
-			return fmt.Errorf("no entrypoint defined, LAMBDA_ENTRYPOINT=%s", entrypoint)
-		}
+	// create any dependencies etc here and add them to the app instance
+	// for example...
+	// awsConfig := aws.NewConfig().WithRegion(os.Getenv("AWS_REGION"))
+	// awsSession := session.Must(session.NewSession())
 
-		entrypointFn, ok := Functions[entrypoint]
-		if !ok {
-			return fmt.Errorf("entrypoint %s not found", entrypoint)
-		}
-
-		handler, err := entrypointFn()
-		if err != nil {
-			return err
-		}
-
-		lambda.Start(handler)
-
-		return nil
-	})()
+	app, err := service.NewApp(log)
 	if err != nil {
-		log.Fatal(fmt.Errorf("error: %w", err))
+		panic(err)
 	}
+
+	svc := service.NewRPC(app)
+
+	lambda.Start(svc.WrapAPIGatewayHTTP())
 }

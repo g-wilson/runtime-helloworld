@@ -1,0 +1,5 @@
+{
+    "issuer": "https://identity.example.com",
+    "token_endpoint": "https://api.example.com/svc/auth/1/authenticate",
+    "jwks_uri": "https://identity.example.com/.well-known/jwks.json"
+}
